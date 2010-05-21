@@ -1,0 +1,589 @@
+\documentclass[amsmath,amssymb,floatfix]{revtex4}
+
+\usepackage{graphicx,psfrag}
+
+\usepackage{amsmath}
+
+
+\numberwithin{equation}{section}
+
+\newcommand{\comm}[2]{  \left[ \; #1 \; , \; #2 \; \right] }
+\newcommand{\eq}[0]{ \; = \; }
+
+
+\def\bra#1{\mathinner{\langle{#1}|}} 
+\def\ket#1{\mathinner{| \, {#1} \: \rangle}} 
+\newcommand{\braket}[2]{\langle #1|#2\rangle} 
+\newcommand{\threebraket}[3]{\langle {#1}|{ #2} |{#3} \rangle} 
+\newcommand{\Integral}[4]{ \int_{#1}^{#2}  \hspace{-2pt} #3 \, d #4 }
+
+\def\Bra#1{\left<#1\right|} 
+\def\Ket#1{\left|#1\right>}
+
+\newcommand{\twomat}[4]{ \left( \begin{array}{cc} #1 & #2 \\ #3 & #4  \end{array} \right) }
+\newcommand{\twovec}[2]{ \left( \begin{array}{c} #1  \\ #2   \end{array} \right) }
+
+\newcommand{\floor}[0]{ \textrm{fl} }
+\newcommand{\ceil}[0]{ \textrm{ceil} }
+
+
+
+%\oddsidemargin 0.0in
+%\evensidemargin 1.0in
+%\textwidth 6.0in
+%\headheight 1.0in
+%\topmargin 0.5in
+\textheight 9.5in
+%\footheight 1.0in 
+
+
+
+  \renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+  \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+  \setcounter{topnumber}{8}
+  \setcounter{bottomnumber}{8}
+  \setcounter{totalnumber}{2}     % 2 may work better
+  \setcounter{dbltopnumber}{2}    % for 2-column pages
+  \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+  \renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+  \renewcommand{\floatpagefraction}{0.07}	% require fuller float pages
+  \renewcommand{\dblfloatpagefraction}{0.01}	% require fuller float page
+
+
+
+
+\begin{document}
+
+
+\title{Notes on an acoustic wave propagator}
+
+\author{Donald J. Kouri}
+\author{Nicholas Maxwell}
+\author{Thomas Markovich}
+\affiliation{
+Departments of Mathematics and Physics\\
+University of Houston\\
+Houston, TX 77204-5006\\
+kouri@uh.edu, nicholas.maxwell@gmail.com
+}
+
+
+%\date{April 6, 2009}
+
+\begin{abstract}
+We present and discuss an operator which propagates solutions of the acoustic wave equation.
+\end{abstract}
+
+\maketitle
+
+
+\section{\label{sec:level1}Introduction\protect}
+
+\noindent
+We consider the equation
+
+
+\begin{equation}
+	\ddot{u}(\mathbf{x},t)  = C^2(\mathbf{x}) \, \nabla^2 \, u(\mathbf{x},t),
+\end{equation}
+
+
+
+%  \frac{\partial^2}{\partial t^2} \, u(\mathbf{x},t)
+
+\noindent
+This equation is of the form
+
+\begin{equation}
+	 \frac{d^2}{d t^2} \, f(t)  = m^2 f(t),
+\end{equation}
+
+\noindent
+because $C$ depends only on $\mathbf{x}$. If $f(0) = f_0$, and $\dot{f}(0) = \dot{f}_0$, then this is an initial value problem, and it is standard to derive the particular solution as follows.
+
+
+\begin{eqnarray}
+	 f(t)  =  \cosh{(m \, t)} \,  c_1 + \sinh{(m \, t)} \,  c_2,  \nonumber \\	
+	 \dot{f}(t)  =  \sinh{(m \, t)} \,m \,  c_1 + \cosh{(m \, t)} \,m \,  c_2, \nonumber \\	 
+	 f(0)  =    c_1 \Rightarrow c_1 = f_0,  \nonumber \\	
+	 \dot{f}(0)  = m \,  c_2 \Rightarrow c_2 = \dot{f}_0/m  . \nonumber  \\	 
+\end{eqnarray}
+
+\noindent
+Thus, writing $z := \sqrt{C^2\nabla^2}$, we assert that the exact solution of equation (I.1) is 
+
+\begin{eqnarray}
+	 u(\mathbf{x},t) = \cosh{( t \, z )} \,  A + \sinh{(t \, z)} \, B, \nonumber \\	 
+	 \dot{u}(\mathbf{x},t) = \sinh{(t \, z )} \, z\, A + \cosh{(t \, z)} \,z\, B.
+\end{eqnarray}
+
+\noindent
+And following the same argument,
+
+\begin{eqnarray}
+	A = u_0, \nonumber \\	 
+	B = z^{-1} \, 	\dot{u}_0.	
+\end{eqnarray}
+
+\noindent
+Then equation (I.4) becomes
+
+\begin{eqnarray}
+	 u(\mathbf{x},t) = \cosh{( t \, z )} \,  u_0 + \sinh{(t \, z)} \, z^{-1} \, 	\dot{u}_0, \nonumber \\	 
+	 \dot{u}(\mathbf{x},t) = \sinh{(t \, z )} \, z\, u_0 + \cosh{(t \, z)} \, \dot{u}_0,
+\end{eqnarray}
+
+\noindent
+which can be rewritten as
+
+\begin{eqnarray}
+	 \twovec{u(\mathbf{x},t)}{\dot{u}(\mathbf{x},t)} = \textrm{P}(t; C)  \twovec{u(\mathbf{x},0)}{\dot{u}(\mathbf{x},0)},	 \; \; \; 
+	 \textrm{P}(t; C) = \twomat{\cosh{( t \, z )}}{\sinh{(t \, z )} / z}{\sinh{(t \, z )} \, z}{\cosh{( t \, z )}}.
+\end{eqnarray}
+
+\section{\label{sec:level2}Investigation\protect}
+
+\noindent
+Using the identities 
+
+\begin{eqnarray}
+%	\cosh^2{(t)}+\sinh^2{(t)} = \cosh{(2\,t)} \nonumber \\
+%	2 \, \sinh{(t)} \cosh{(t)} = \sinh{(2\,t)}, \nonumber \\
+	\sinh{(t)}\cosh{(s)}+\cosh{(t)}\sinh{(s)} = \sinh{(t+s)} , \nonumber \\
+	\cosh{(t)}\cosh{(s)}+\sinh{(t)}\sinh{(s)} = \cosh{(t+s)} , \nonumber \\
+\end{eqnarray}
+
+\noindent
+and assuming that $\cosh{( t \, z )}$ commutes with $\sinh{( t \, z )}$, and both commute with $z$ and $z^{-1}$, it is straight-forward to show that 
+
+\begin{eqnarray}
+\textrm{P}(t; C) \; \textrm{P}(s; C) = \textrm{P}(t + s; C) ,  \; \; \;  \textrm{P}^n(t; C) = \textrm{P}(n \, t; C).
+\end{eqnarray}
+
+\noindent 
+We interpret $\cosh{( t \, \sqrt{C^2\nabla^2} )}$ and $\sinh{( t \, \sqrt{C^2\nabla^2} )}$ by their power series expansions. The the Taylor series expansions are given by $\cosh{(x)} = \sum_{n=0}^\infty x^{2n}/(2 n)!$, and $\sinh{(x)} = \sum_{n=0}^\infty x^{2n+1}/(2 n+1)!$, so
+
+
+\begin{eqnarray}
+\cosh{( t \, \sqrt{C^2\nabla^2} )} =  \sum_{n=0}^\infty \frac{t^{2n}}{(2n)!} (C^2\nabla^2)^n
+\end{eqnarray}
+
+\begin{eqnarray}
+\sinh{( t \, \sqrt{C^2\nabla^2} )} =  \sum_{n=0}^\infty \frac{t^{2n+1}}{(2n+1)!} (C^2\nabla^2)^n \, \sqrt{C^2\nabla^2}.
+\end{eqnarray}
+
+\noindent 
+Now, it is complicated to evaluate $\sqrt{C^2\nabla^2}$, however, examining the form of $\textrm{P}$, we see that the odd power of $\sqrt{C^2\nabla^2}$ in the expansion is absorbed, and we can write
+
+
+
+\begin{equation}
+	 \textrm{P}(t; C) = \sum_{n=0}^\infty \twomat{\frac{t^{2n}}{(2n)!}(C^2\nabla^2)^n}{\frac{t^{2n+1}}{(2n+1)!}(C^2\nabla^2)^n}{\frac{t^{2n+1}}{(2n+1)!}(C^2\nabla^2)^{n+1}}{\frac{t^{2n}}{(2n)!}(C^2\nabla^2)^n}
+\end{equation}
+	 
+\begin{equation}
+	 \textrm{P}(t; C) = \sum_{n=0}^\infty \frac{t^{2n}(C^2\nabla^2)^n}{(2n+1)!}\twomat{2n+1}{t}{t \, C^2\nabla^2}{2n+1}.
+\end{equation}
+
+\noindent 
+To a first order,
+
+\begin{eqnarray}
+	 \textrm{P}(\tau; C) = \twomat{1}{\tau}{\tau \, C^2\nabla^2}{1} +  ...
+\end{eqnarray}
+
+\noindent 
+It is standard to write equation (I.1) as 
+
+\begin{eqnarray}
+	 \frac{d}{d t} \, \twovec{u(t)}{\dot{u}(t)} =  \twomat{0}{1}{C^2\nabla^2}{0} \twovec{u(t)}{\dot{u}(t)}, 
+\end{eqnarray}
+
+\noindent d
+then, for small $\tau$,
+
+
+\begin{equation}
+\frac{d}{d t} \, \twovec{u(t)}{\dot{u}(t)} \approx \frac{1}{\tau} \left( \twovec{u(t+\tau)}{\dot{u}(t+\tau)} - \twovec{u(t)}{\dot{u}(t)} \right) \Rightarrow \twovec{u(t+\tau)}{\dot{u}(t+\tau)} \approx \left( \twomat{0}{1}{C^2\nabla^2}{0}  \tau + 1  \right) \twovec{u(t)}{\dot{u}(t)} \nonumber \\
+\end{equation}
+\begin{equation} 
+\twovec{u(t+\tau)}{\dot{u}(t+\tau)} = \twomat{1}{\tau}{\tau \, C^2\nabla^2}{1}  \twovec{u(t)}{\dot{u}(t)}.
+\end{equation}
+
+So we can see that truncating the Taylor series of $\textrm{P}$ to the first term is exactly equivalent to Euler's method for the solution of (I.1). 
+
+\section{\label{sec:level3}Application\protect}
+
+Depending on the application, $\dot{u}(t)$ may be unwanted information, so we might try to apply $\textrm{P}$ in such a way that we avoid its computation. If we know that $\dot{u}(0) = 0$, we can take from equation (I.7) that
+
+\begin{equation}
+	 u(T) = \cosh{( T \, \sqrt{C^2\nabla^2} )} \; u(0).
+\end{equation}
+
+This let's us compute $u(T)$ from $u(0)$, while avoiding $\dot{u}(T)$. We can't then compute $u(T+s)$, as we would again require $\dot{u}(T)$ for that additional step, so we take $T$ as the final step to which we wish to propagate $u$.
+
+Another, less obvious approach is to use the the binomial theorem to show that
+
+\begin{equation}
+(\cosh{x})^{2n} =  \frac{2}{4^n} \, \sum _{k=1}^n  \frac{(2n)!}{(n+k)!(n-k)!} \cosh{(2k\,x)} + \frac{(2n)!}{4^n(n!)^2}.
+\end{equation}
+
+\noindent
+then, for $n = 0$,
+
+\begin{equation}
+\cosh{(n \, t \, x)} = 1,
+\end{equation}
+
+\noindent
+for $n = 1$,
+
+\begin{equation}
+\cosh{(n \, t \, x)} = \cosh{( t \, x)},
+\end{equation}
+
+\noindent
+for $n \ge 2$,
+
+\begin{equation}
+\cosh{(n \, t \, x)} = \frac{4^n}{2} (\cosh{(t \, x/2)})^{2n} - \sum_{k=1}^{n-1} \frac{(2n)!}{(n+k)!(n-k)!} \cosh{(k \, t \, x)} - \frac{1}{2} \frac{(2n)!}{(n!)^2}.
+\end{equation}
+
+
+\begin{equation}
+\cosh{(n \, t \, x)} = 2^{n-1}  \sum_{k=0}^{n} \frac{n!}{k!(n-k)!} (\cosh{(t \, x)})^{k} - \sum_{k=1}^{n-1} \frac{(2n)!}{(n+k)!(n-k)!} \cosh{(k \, t \, x)} - \frac{1}{2} \frac{(2n)!}{(n!)^2}.
+\end{equation}
+
+%\begin{equation}
+%\cosh{(n \, t \, x)} = \frac{2^n}{2} (\cosh{(t \, x)})^{n} - \sum_{k=1}^{n/2-1} \frac{n!}{(n/2+k)!%(n/2-k)!} \cosh{(2 \, k \, t \, x)} - \frac{1}{2} \frac{(n)!}{((n/2	)!)^2}.
+%\end{equation}
+
+
+
+
+
+%\begin{equation}
+%\frac{2}{4^n} \, \frac{(2n)!}{(n!)^2} \cosh{(2k\,x)} = (\cosh{x})^{2n} -  \frac{2}{4^n} \, \sum _%%{k=1}^n  \frac{(2n)!}{(n+k)!(n-k)!} \cosh{(2k\,x)} + \frac{(2n)!}{4^n(n!)^2}.
+%\end{equation}
+
+
+
+\section{\label{sec:level3}Damping.\protect}
+
+We modify (I.1) to
+
+\begin{equation}
+	\ddot{u}(\mathbf{x},t)  = C^2(\mathbf{x})\, \nabla^2 \, u(\mathbf{x},t) \, - \, 2\,D(\mathbf{x}) \, \dot{u}(\mathbf{x},t) \, - \,D^2(\mathbf{x}) \,u(\mathbf{x},t) ,
+\end{equation}
+
+\begin{equation}
+	\ddot{u}(t)  = z^2 \, u(t) \, - \, 2\,D \, \dot{u}(t) \, - \,D^2\,u(t) ,
+\end{equation}
+
+
+
+\begin{equation}
+	u(t)  = e^{-D t} \cosh{(t \, z)} \, A + e^{-D t} \sinh{(t \, z)} \, B ,
+\end{equation}
+
+\begin{equation}
+	\dot{u}(t)  = -D \, u(t) + z \, e^{-D t} \sinh{(t \, z)} \, A + z \, e^{-D t} \cosh{(t \, z)} \, B ,
+\end{equation}
+
+\begin{equation}
+	u(0)  =  A = u_0, \,  \dot{u}(0)  = -D \, u_0 + z \, B = \dot{u}_0 ,
+\end{equation}
+
+\begin{equation}
+	A = u_0, B = (\dot{u}_0+D \, u_0 )/z,
+\end{equation}
+
+\begin{equation}
+	u(t)  = e^{-D t} \cosh{(t \, z)} \, u_0 + e^{-D t} \sinh{(t \, z)} \, \dot{u}_0/z + e^{-D t} \sinh{(t \, z)} \, D \, u_0 /z  ,
+\end{equation}
+
+\begin{equation}
+	\dot{u}(t)  =  -D \,e^{-D t} \cosh{(t \, z)} \, u_0 + -D \, e^{-D t} \sinh{(t \, z)} \, \dot{u}_0/z + -D \, e^{-D t} \sinh{(t \, z)} \, D \, u_0 /z  , + z \, e^{-D t} \sinh{(t \, z)} \, A + z \, e^{-D t} \cosh{(t \, z)} \, B ,
+\end{equation}
+
+
+...
+
+
+\begin{equation}
+	\frac{\partial}{\partial t} \,  {u}(t,x)  = - c \, \frac{\partial}{\partial x} \, u(t,x) ,
+\end{equation}
+
+\begin{equation}
+	\frac{\partial}{\partial t} \, \hat{u}(t,k)  = - c \, i k \, \hat{u}(t,k) ,
+\end{equation}
+
+\begin{equation}
+	 \hat{u}(t,k)  = \exp{\left(   - c \, i \, k \, t \right)} \,  \hat{u}(0,k) ,
+\end{equation}
+
+\begin{equation}
+	{u}(t,x)  = {u}(0,x-ct) ,
+\end{equation}
+
+
+\section{\label{sec:level3}Taylor Expansion.\protect}
+
+
+The the Taylor series expansions are given by $\cosh{(x)} = \sum_{n=0}^\infty x^{2n}/(2 n)!$, and $\sinh{(x)} = \sum_{n=0}^\infty x^{2n+1}/(2 n+1)!$, so
+
+
+\begin{eqnarray}
+\cosh{( t \, \sqrt{C^2\nabla^2} )} =  \sum_{n=0}^\infty \frac{t^{2n}}{(2n)!} (C^2\nabla^2)^n
+\end{eqnarray}
+
+\begin{eqnarray}
+\sinh{( t \, \sqrt{C^2\nabla^2} )} =  \sum_{n=0}^\infty \frac{t^{2n+1}}{(2n+1)!} (C^2\nabla^2)^n \, \sqrt{C^2\nabla^2},
+\end{eqnarray}
+
+
+\begin{equation}
+	 \textrm{P}(t; C) = \sum_{n=0}^\infty \twomat{\frac{t^{2n}}{(2n)!}(C^2\nabla^2)^n}{\frac{t^{2n+1}}{(2n+1)!}(C^2\nabla^2)^n}{\frac{t^{2n+1}}{(2n+1)!}(C^2\nabla^2)^{n+1}}{\frac{t^{2n}}{(2n)!}(C^2\nabla^2)^n}
+\end{equation}
+	 
+\begin{equation}
+	 \textrm{P}(t; C) = \sum_{n=0}^\infty \frac{t^{2n}(C^2\nabla^2)^n}{(2n)!}\twomat{1}{t/(2n+1)}{t \, C^2\nabla^2/(2n+1)}{1}.
+\end{equation}
+
+So, to compute $\twovec{u_1}{v_1} = \textrm{P}(t; C) \twovec{u_0}{v_0}$, truncated to $M$ term in the expansion, we can generate the sequences $(U_n)_{n=0}^{M+1}$ and $(V_n)_{n=0}^{M}$, as
+
+\begin{eqnarray}
+	 U_0 = u_0, \; \; U_n = t^2 \, C^2\nabla^2 \, U_{n-1} / {(4n^2-2n)},\\
+  	 V_0 = v_0, \; \; V_n = t^2 \, C^2\nabla^2 \, V_{n-1} / {(4n^2-2n)}
+\end{eqnarray}
+
+\begin{eqnarray}
+	 u_1 = \sum_{n=0}^M \, U_n +  t \, V_n/(2n+1),\\
+	 v_1 = \sum_{n=0}^M \, \frac{1}{t} \, (4n^2+6n+2)U_{n+1}/(2n+1) + V_n,\\	 
+\end{eqnarray}
+
+Or, to compute $\twovec{u_1}{v_1} = \textrm{P}(t; C) \twovec{u_0}{v_0}$, truncated to $M$ term in the expansion, we can generate the sequences $(U_n)_{n=0}^{M+1}$ and $(V_n)_{n=0}^{M}$, as
+
+\begin{eqnarray}
+	 U_0 = u_0, \; \; U_n = \lambda^{-2} \, C^2\nabla^2 \, U_{n-1} / {(4n^2-2n)},\\
+  	 V_0 = v_0, \; \; V_n = \lambda^{-2} \, C^2\nabla^2 \, V_{n-1} / {(4n^2-2n)}
+\end{eqnarray}
+
+\begin{eqnarray}
+	 u_1 = \sum_{n=0}^M \, (\lambda \, t)^{2n} \, U_n +  (\lambda \, t)^{2n} \, t \, V_n/(2n+1),\\
+	 v_1 = \sum_{n=0}^M \, (\lambda \, t)^{2n} \, \frac{1}{t} \, (4n^2+6n+2)U_{n+1}/(2n+1) + (\lambda \, t)^{2n} \, V_n,\\	 
+\end{eqnarray}
+
+where $\lambda$ is a real number which serves to shift magnitude from the sequences $(U_n), (V_n)$.
+
+\section{\label{sec:level3}Hermite Expansion.\protect}
+
+\noindent using the expansion, 
+
+
+\begin{equation}
+	\exp{(-i \, t \, x)} = \sum_{m=0}^{\infty} \frac{(-i \, t \, \lambda)^{m}}{m! \, 2^{m}} \exp{\left(-\frac{( t \, \lambda  )^2}{4}\right)} H_m(x/\lambda),
+\end{equation}
+
+\begin{equation}
+	\cosh{( t \, x)} = \sum_{m=0}^{\infty} c_m(t \, \lambda) H_{2m}(x/\lambda), \, \, c_m(t \, \lambda) =  \frac{(t \, \lambda)^{2m}}{(2m)! \, 4^{m}} \exp{\left(\frac{(t \, \lambda )^2}{4}\right)} .
+\end{equation}
+
+Then, we can use the recurrence relation
+
+
+\begin{equation}
+	H_{2m}(x) = (4x^2 -8m+6)H_{2m-2}(x)-8(m-1)(2m-3)H_{2m-4}(x),
+\end{equation}
+\begin{equation}
+	 H_{0}(x) = 1, \, H_{2}(x) = 4x^2-2. \nonumber
+\end{equation}
+
+
+
+\section{\label{sec:level3}Laguerre Expansion.\protect}
+
+\noindent 
+We wish to expand $\exp{(i \, t \, x)}$ into a power series,
+
+\begin{equation}
+e^{i \, t \, x} = \sum _{n=0}^\infty \tilde{c}_n^{(\alpha)}(t) L_n^{(\alpha)}(x),
+\end{equation}
+
+\noindent where $L_n^{(\alpha)}$ is the $n^{th}$ generalized Laguerre polynomial, which have $\alpha$ as a parameter. If $\alpha = \pm \frac{1}{2}$, then (IV.1) becomes a Hermite polynomial expansion. It is non-trivial to show that
+
+
+\begin{equation}
+\tilde{c}_n^{(\alpha)}(t) = (-i \, t)^n (1-i \, t)^{-1-n-\alpha},
+\end{equation}
+
+\noindent 
+which we've been unable to simplify to a more enlightening form.
+
+
+
+Then, the expansions are 
+% for $\cosh{(t \, x)}$ is
+
+\begin{equation}
+\cosh{(t \, x)} = \sum _{n=0}^\infty {c}_n^{(\alpha)}(t) \frac{1}{2} \left( L_n^{(\alpha)}(x) + L_n^{(\alpha)}(-x) \right),
+\end{equation}
+
+\begin{equation}
+\sinh{(t \, x)} = \sum _{n=0}^\infty {c}_n^{(\alpha)}(t) \frac{1}{2} \left( L_n^{(\alpha)}(x) - L_n^{(\alpha)}(-x) \right),
+\end{equation}
+
+
+\noindent
+where  ${c}_n^{(\alpha)}(t) =   \tilde{c}_n^{(\alpha)}(i \, t) =  (t)^n (1+ \, t)^{-1-n-\alpha}$.
+
+	Using that
+
+\begin{equation}
+	L_n^{(\alpha)}(x)= \sum_{m=0}^n \frac{(-x)^m }{m!}  \binom {n+\alpha} {n-m},
+\end{equation}
+
+
+%\begin{equation}
+%\cosh{(t \, x)} = \sum _{n=0}^\infty  \sum_{m=0}^{\floor{(n/2)}} \frac{{c}_n^{(\alpha)}(t)}{(2m)!}  \binom {n+\alpha} {n-2m} x^{2m}
+%\end{equation}
+
+%\begin{equation}
+%\sinh{(t \, x)} = \sum _{n=0}^\infty  \sum_{m=0}^{\floor{(n/2)}} \frac{{c}_n^{(\alpha)}(t)}{(2m+1)!}  \binom {n+\alpha} {n-2m+1} x^{2m+1}
+%\end{equation}
+
+\noindent
+we truncate these expansions to $2N$ terms and switch the sums, 
+
+
+
+\begin{equation}
+\cosh{(t \, x)} \approx  \sum_{m=0}^{N}  \frac{a_m^{(\alpha,N)}(t)  }{(2m)!}   x^{2m}, \, \, a_m^{(\alpha,N)}(t)  =  \sum _{n=2m}^{2N}  {c}_n^{(\alpha)}(t)  \binom {n+\alpha} {n-2m}
+\end{equation}
+
+\begin{equation}
+\sinh{(t \, x)} \approx  \sum_{m=0}^{N}  \frac{b_m^{(\alpha,N)}(t)  }{(2m+1)!}   x^{2m+1}, \, \, b_m^{(\alpha,N)}(t) =  \sum _{n=2m+1}^{2N}  {c}_n^{(\alpha)}(t)  \binom {n+\alpha} {n-2m-1}.
+\end{equation}
+
+With $\binom{z}{n} = \prod_{k=1}^{n} \frac{z-n+k}{k}$,
+
+\begin{equation}
+	a_m^{(\alpha,N)}(t)  =  \sum _{n=2m}^{2N}  \exp \left( n \log t - (+1+n+\alpha) \log (1+t) + \sum_{k=1}^{n-2m} \left( \log( k+\alpha +2m ) - \log{k} \right)   \right)
+\end{equation}
+
+
+\begin{equation}
+	b_m^{(\alpha,N)}(t)  =  \sum _{n=2m+1}^{2N}  \exp \left( n \log t - (+1+n+\alpha) \log (1+t) + \sum_{k=1}^{n-2m-1} \left( \log( k+\alpha +2m+1 ) - \log{k} \right)   \right)
+\end{equation}
+
+
+\section{\label{sec:level3}Application of $\nabla^2$.\protect}
+
+$\nabla^2$ is diagonal in the Fourier basis. Letting $\hat{u}(\mathbf{k}) = \mathcal{F} (u(\mathbf{x}))$, with $\mathcal{F}$ being the Fourier transform, mapping functions over the $\mathbf{x}$ space to functions over the $\mathbf{k}$ space, we may apply $\nabla^2$ as
+
+\begin{equation}
+\nabla^2 \, u(\mathbf{x}) = \mathcal{F}^{-1} (  - \mathbf{k} \cdot \mathbf{k} \, \, \hat{u}(\mathbf{k}) ), \, \, \nabla^2 \, u(\mathbf{x}) = \mathcal{F}^{-1} ( \hat{\nabla}^2 (\mathbf{k}) \, \, \hat{u}(\mathbf{k}) ),
+\end{equation}
+
+
+\begin{equation}
+\hat{\nabla}^{2n} (\mathbf{k}) = (-1)^n \, ( \mathbf{k} \cdot \mathbf{k} )^n
+\end{equation}
+
+This is a valid approach, however expansions of operators involving $\nabla^2$ may require $n$ to be large, and further, in the discretization of $u(\mathbf{x})$, many grid points may be required, implying large magnitudes of $\mathbf{k}$, so that $( \mathbf{k} \cdot \mathbf{k} )^n$ will be very large. In practice, $\hat{u}(\mathbf{k})$ may be essentially zero outside of some region of the $\mathbf{k}$ domain, but may not be identically zero. In such cases the large values of $( \mathbf{k} \cdot \mathbf{k} )^n$ will multiply those small values of $\hat{u}(\mathbf{k})$ and yield large numerical error. The solution is to apply a low-pass filter, $\textrm{f}(\mathbf{k})$, to $\hat{\nabla}^{2}$,
+
+\begin{equation}
+\nabla^2 \, u(\mathbf{x}) = \mathcal{F}^{-1} (  ( - \textrm{f}(\mathbf{k}) \, \mathbf{k} \cdot \mathbf{k}) \, \, \hat{u}(\mathbf{k}) ).
+\end{equation}
+
+As analyzed in [1], one such filter is the system function of the Hermite Distributed Approximating Functionals(HDAFs). If we define $Z_m(\xi ) = e^{- \xi}\sum_{n=0}^m \xi^n/n!$, then 
+
+\begin{equation}
+\hat{\delta} (k; \, \sigma, m) = Z_m \left( \frac{k^2 \, \sigma^2}{2} \right),
+\end{equation}
+
+is the Fourier transform of the HDAF ${\delta} (x; \, \sigma, m)$. It is shown in [1] that the inflection point of $\hat{\delta}$ is given by $k_c = \sqrt{2m+1}/\sigma$, and the distance between the inflection points of the first derivative of $\hat{\delta}$, $\Delta k$ is $\Delta k = \sqrt{4m+3-4 \sqrt{m^2+m/2}}/\sigma \approx \sqrt{2}/\sigma$. So we may interpret $k_c$ as the cutoff frequency, and $\Delta k$ as the length of the transition region from 1 to 0, of $\hat{\delta}$. Then we take $\hat{\delta} (k; \, \sigma, m) = \hat{\delta} (k; \, k_0, \Delta k)$, with $\sigma = \sqrt{2}/(\Delta k)$, and $m = \textrm{ceil}{ \left( \left( \frac{k_c}{\Delta k} \right)^2  - \frac{1}{2} \right) }$. It is practical to evaluate $\hat{\delta} (k; \, \sigma, m)$ by making use of logarithms, $Z_m(\xi ) = \sum_{n=0}^m \exp \left( -x + n \log (\xi) - \log(n!) \right)$.
+
+In the three-dimensional case, we have several options for defining the low-pass filter, $\textrm{f}(\mathbf{k})$. Most straight-forwardly we could take
+
+\begin{equation}
+\textrm{f}(\mathbf{k}) = \hat{\delta} (k_x; \, \sigma_x, m_x)\hat{\delta} (k_y; \, \sigma_y, m_y)\hat{\delta} (k_z; \, \sigma_z, m_z),
+\end{equation}
+
+\noindent where $\mathbf{k} = (k_x,k_y,k_z)$. Another approach would be to take 
+
+\begin{equation}
+\textrm{f}(\mathbf{k}) = \hat{\delta} (g(\mathbf{k}); \, \sigma, m),
+\end{equation}
+
+\noindent where  ${g}: \mathbb{R}^3 \rightarrow \mathbb{R}$, is a geometrical function, thus defining a low-pass region in the $\mathbf{k}$ domain.
+
+We first consider the one-dimensional case, $\textrm{f}({k}) = \hat{\delta} (k; \, \sigma, m)$. In order to construct a scheme for choosing values of $k_c$ to use, we define, $|| \hat{u}(k) ||_{(K)} = \Integral{-K}{K}{|u(k)|}{k}$, so $|| \cdot ||_{(K)}$ is an L1-norm on $[-K,K]$. Then, we define $S(K; \, \hat{u}) = || \hat{u}(k) ||_{(K)} / || \hat{u}(k) ||_{(\infty)}$. $S$ has the properties $S(0) = 0$ , $\lim_{k \rightarrow \infty} S(k) = 1$, $S(k) \in [0,1]$, and $S$ is a monotonically increasing function, so $k1 \le k2 \Rightarrow S(k1) \le S(k2)$. Thus, we may say that for any $\epsilon \in (0,1)$, there exists a $k_c$ such that $1 - S(k_c) \le \epsilon$, valid for any absolutely integrable function. 
+
+We discretize $u(x)$ as $u_i=u(x_i)$, $x_i = i \, h_x $, $h_x = L/N$, $N \in \mathbb{N}$, $L=x_f-x_0$. Then, $k_{nyq.} = 1/(2 h_x)$ is the Nyquist frequency in the discretization, $\hat{u}(k)$ is discretized as $\hat{u}_j = \hat{u}(k_j)$, $k_j = j \, h_k$, $h_k = 1/L$, which can be found from $(N/2) h_k = k_{nyq.} = 1/(2(L/N))$. Because $u(x)$ is a real-valued function, we have that $\hat{u}(k) = (\hat{u}(-k))^*$, and $|\hat{u}(k)| = |\hat{u}(-k)|$.
+	
+	With these properties we have $|| \hat{u}(k) ||_{(K)} = 2 \Integral{0}{K}{|u(k)|}{k}$, and by the assumption of having sampled $u(x)$ with $N$ points, $|| \hat{u}(k) ||_{(\infty)} = || \hat{u}(k) ||_{(k_{nyq.})}$. It is sufficient to evaluate the interal as 
+
+\begin{equation}	
+	s_m \, := \, \frac{1}{ h_k}	\Integral{0}{m \, h_k}{|u(k)|}{k} = \sum_{j=0}^{m} |\hat{u}_j|.
+\end{equation}
+
+Then, defining $S_m = s_m/s_{N / 2}$, we have $S_0 = 0$, $S_{N/2} = 1$, $S_m \in [0,1]$, $S$ is a monotonically increasing sequence, $S_{m} = S_{m-1} + |\hat{u}_m|/s_{N / 2}$. So, to find the cutoff frequency, $k_c$, we specify an $\epsilon \in (0,1)$, and step through $S_m$ untill $1 - S_c \le \epsilon$; a $c \in \mathbb{N}$, $c \le N/2$ is guaranteed to exist. Now the filter $\textrm{f}({k})$ is parameterized by $\Delta k$, $\epsilon$.
+
+For a more practical approach, we redefine $\sigma$ so that we specify $\hat{\delta} (k; \, \sigma \sqrt{2 m+1}, m)$, then, $k_c$ is given by $1/\sigma$. Now $\sigma$ linearly scales the filter in $k$, and $m$ sets the sharpness of the filter. We then consider, with  $\Delta k = \sqrt{2}/(\sigma \, \sqrt{2 m+1})$, $M(\mu ; \, m) = \hat{\delta} (k_c-(\Delta k)\mu /2; \, \sigma \sqrt{2 m+1}, m)$; $M(1; \, m)$ gives the value of $\hat{\delta} (k; \, \sigma \sqrt{2 m+1}, m)$, at the first inflection point of the first derivative of  $\hat{\delta} (k; \, \sigma \sqrt{2 m+1}, m)$, further, $M$ is independent of $\sigma$.
+
+We can see from table I that, $M(\mu; \, m)$ tends to converge in $m$, for a given $\mu$, quickly. The strategy will then be this: specify $\epsilon_1,\epsilon_2 \in (0,1)$, and find $c_1,c_2, c_1<c_2$ so that $1-S_{c_1} < \epsilon_1 ,1-S_{c_2} < \epsilon_2 $. So, if $\epsilon_1 = 0.05,\epsilon_2 = 0.01$, 
+then $\left\{ \hat{u}_j : j \le c_1 \right\}$ will represent the first 95 \%  of the magnitude of $\hat{u}$, and $\left\{ \hat{u}_j : j \le c_2 \right\}$, the first 99 \%. Then, use $k_{c_2}$ as the cutoff frequency, $\sigma = 1/k_{c_2}$, and $m = \ceil{ \left( \frac{1}{4}\mu^2/(1-k_{c_1}/k_{c_2})^2-1/2 \right)}$, so that $k_{c_1}$ is the frequency at which the response is $M(\mu; \, m)$
+
+\begin{table}[htb]
+\caption{\label{tab:table1} $M(\mu ; \, m)$ for several values of $m, \mu$ }
+\begin{ruledtabular}
+\begin{tabular}{ccccccccccc}
+m & $\mu = $0.2 & 0.4 & 0.6 & 0.8 & 1 & 1.2 & 1.4 & 1.6 & 1.8 & 2 \\
+\hline
+\vspace{-5pt}
+\\
+1 & 0.64 & 0.72 & 0.79 & 0.85 & 0.9 & 0.94 & 0.97 & 0.99 & 0.99 & 1 \\
+2 & 0.62 & 0.7 & 0.77 & 0.83 & 0.89 & 0.93 & 0.96 & 0.98 & 0.99 & 1 \\
+3 & 0.62 & 0.69 & 0.76 & 0.83 & 0.88 & 0.92 & 0.95 & 0.97 & 0.98 & 0.99 \\
+4 & 0.61 & 0.69 & 0.76 & 0.82 & 0.87 & 0.91 & 0.95 & 0.97 & 0.98 & 0.99 \\
+5 & 0.61 & 0.69 & 0.76 & 0.82 & 0.87 & 0.91 & 0.94 & 0.97 & 0.98 & 0.99 \\
+6 & 0.61 & 0.68 & 0.75 & 0.82 & 0.87 & 0.91 & 0.94 & 0.96 & 0.98 & 0.99 \\
+7 & 0.6 & 0.68 & 0.75 & 0.81 & 0.87 & 0.91 & 0.94 & 0.96 & 0.98 & 0.99 \\
+8 & 0.6 & 0.68 & 0.75 & 0.81 & 0.86 & 0.91 & 0.94 & 0.96 & 0.98 & 0.99 \\
+9 & 0.6 & 0.68 & 0.75 & 0.81 & 0.86 & 0.9 & 0.94 & 0.96 & 0.98 & 0.99 \\
+10 & 0.6 & 0.68 & 0.75 & 0.81 & 0.86 & 0.9 & 0.94 & 0.96 & 0.98 & 0.99 \\
+20 & 0.59 & 0.67 & 0.74 & 0.8 & 0.86 & 0.9 & 0.93 & 0.96 & 0.97 & 0.98 \\
+40 & 0.59 & 0.67 & 0.74 & 0.8 & 0.85 & 0.89 & 0.93 & 0.95 & 0.97 & 0.98 \\
+60 & 0.59 & 0.66 & 0.73 & 0.8 & 0.85 & 0.89 & 0.93 & 0.95 & 0.97 & 0.98 \\
+80 & 0.59 & 0.66 & 0.73 & 0.8 & 0.85 & 0.89 & 0.92 & 0.95 & 0.97 & 0.98 \\
+100 & 0.59 & 0.66 & 0.73 & 0.79 & 0.85 & 0.89 & 0.92 & 0.95 & 0.97 & 0.98 \\
+2000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+4000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+6000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+8000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+10000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+12000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+14000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+16000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+18000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+20000 & 0.58 & 0.66 & 0.73 & 0.79 & 0.84 & 0.89 & 0.92 & 0.95 & 0.96 & 0.98 \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+
+
+
+
+
+\begin{thebibliography}{14}
+
+\bibitem{1}  Bodmann, Hoffman, Kouri, Papadakis,  \textit{Hermite Distributed Approximating Functionals as Almost-Ideal Low-Pass Filters} , (Sampling Theory in Signal And Image Processing, 2008 Vol. 7, No. 1)
+
+\end{thebibliography}
+
+
+
+
+\end{document}

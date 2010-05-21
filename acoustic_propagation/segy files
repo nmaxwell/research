@@ -1,0 +1,44 @@
+
+
+addpath("/workspace/SegyMAT")
+model = ReadSegy("sigsbee2a_migration_velocity.sgy")
+save model.mat model -mat-binary
+
+
+
+
+import scipy.io as sio
+from waveprop import *
+from numpy import *
+
+
+model_dict = sio.loadmat("model.mat")
+model = array(model_dict["model"])
+model=rotate_array(model)
+
+write_png(model, "model.png", major_scale=std(model)*3, center=mean(model), ordering='rm' )
+
+
+
+
+
+
+
+A = zeros((1000,1000))
+
+for i in range(1000):
+	for j in range(1000):
+		if i>j and j < 300:
+			A[i][j] = 1
+
+
+
+write_png(A, "A.png", major_scale=1, center=0, ordering='rm' )
+
+
+
+
+
+
+
+

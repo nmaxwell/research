@@ -1,0 +1,262 @@
+
+\documentclass{beamer}
+
+
+\usepackage{amsmath}  
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{graphicx}
+
+\setbeamertemplate{navigation symbols}{}
+
+
+\usetheme{Montpellier}
+
+\beamersetuncovermixins{\opaqueness<1>{25}}{\opaqueness<2->{15}}
+
+
+
+\newcommand{\twomat}[4]{ \left( \begin{array}{cc} #1 & #2 \\ #3 & #4  \end{array} \right) }
+\newcommand{\twovec}[2]{ \left( \begin{array}{c} #1  \\ #2   \end{array} \right) }
+
+\newcommand{\threemat}[9]{ \left( \begin{array}{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9 \end{array} \right) }
+\newcommand{\threevec}[3] { \left( \begin{array}{c} #1  \\ #2 \\ #3  \end{array} \right) }
+
+
+
+\title{Linear Wave Propagation}
+\author{Nick Maxwell, Qingqing Liao, Dr. Kouri}
+\date{\today}
+
+\begin{document}
+
+
+
+\frame{\titlepage}
+%\end{frame}
+
+%\section[Outline]{}
+
+%\frame{\tableofcontents}
+
+
+
+%\subsection{A Quick Primer on the Math of Signals }
+
+
+\section[First approach ]{}
+
+\begin{frame}
+\frametitle{First approach (1 of 3)}	
+\begin{flushleft}
+Starting with,
+\end{flushleft}
+\begin{equation*}
+\frac{ \partial^2 }{ \partial \, t^2} \; u(\mathbf{x},t)  = C^2(\mathbf{x}) \, \nabla^2 \, u(\mathbf{x},t),
+\end{equation*}
+\begin{flushleft}
+we note that the action of $C^2(\mathbf{x}) \, \nabla^2$ is independent of $t$, so in a sloppy sense, we take $z = \sqrt{C^2(\mathbf{x}) \, \nabla^2}$, $g(t) = u(\mathbf{x},t)$. Then we solve,
+\end{flushleft}
+\begin{equation*}
+\frac{ d^2 }{ d \, t^2} \; g(t)  = z^2 \; g(t),
+\end{equation*}
+\begin{flushleft}
+the general solution to which is a linear combination of $exp(\pm z \, t)$.
+\end{flushleft}
+\end{frame}
+
+\begin{frame}
+\frametitle{First approach (2 of 3)}	
+\begin{flushleft}
+So using $\cosh(x) = \frac{1}{2} ( e^{+x} + e^{-x})$, $\sinh(x) = \frac{1}{2} ( e^{+x} - e^{-x})$, we can pick the solutions,
+\end{flushleft}
+\begin{equation*}
+g(t) = cosh(z \, t) \, A + sinh(z \, t) \, B, \; g(0) = A ,
+\end{equation*}
+\begin{equation*}
+g'(t) = sinh(z \, t) \,z \, A + cosh(z \, t) \,z \, B, \; g'(0) = z \, B \Rightarrow B = z^{-1} g'(0).
+\end{equation*}
+\begin{flushleft}
+Then,
+\end{flushleft}
+\begin{equation*}
+g(t) = cosh(z \, t) \, g(0) + sinh(z \, t) \, z^{-1} g'(0),
+\end{equation*}
+\begin{equation*}
+g'(t) = sinh(z \, t) \,z \, g(0) + cosh(z \, t) \, z^{-1}\,z\, g'(0),
+\end{equation*}
+rewriting,
+\begin{equation*}
+\twovec{g(t)}{g'(t)} = \twomat{cosh(z \, t)} {sinh(z \, t) \, z^{-1}} {sinh(z \, t) \,z} {cosh(z \, t)} \, \twovec{g(0)}{g'(0)}.
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{First approach (3 of 3)}
+\begin{flushleft}
+Substituting $u(\mathbf{x},t)$ for $g(t)$, $v(\mathbf{x},t)$ for $g'(t)$, 
+\end{flushleft}
+\begin{equation*}
+\twovec{ u(\mathbf{x},t+\delta) }{ v(\mathbf{x},t+\delta) } =  \textrm{P}(\delta) \, \twovec{ u(\mathbf{x},t) }{ v(\mathbf{x},t) },
+\end{equation*}
+\begin{equation*}
+\textrm{P}(\delta) = \twomat{cosh(\delta \, z )} {sinh(\delta \, z) \, z^{-1}} {sinh(\delta \, z) \,z} {cosh(\delta \, z	)}.
+ \end{equation*}
+\end{frame}
+
+\section[Second approach ]{}
+
+\begin{frame}
+\frametitle{Second approach (1 of 5)}	
+\begin{flushleft}
+Starting with,
+\end{flushleft}
+\begin{equation*}
+\frac{ \partial^2 }{ \partial \, t^2} \; u(\mathbf{x},t)  = C^2(\mathbf{x}) \, \nabla^2 \, u(\mathbf{x},t) + f(\mathbf{x},t),
+\end{equation*}
+\begin{flushleft}
+and the notation,
+\end{flushleft}
+\begin{equation*}
+\textrm{M} = \twomat{0}{1}{ C^2(\mathbf{x}) \, \nabla^2 }{0}, \; \textbf{w}(t) = \twovec{ u(\mathbf{x},t) }{ v(\mathbf{x},t) }, \mathbf{f}(\mathbf{x},t) =  \twovec{0}{f(\mathbf{x},t)},
+\end{equation*}
+\begin{equation*}
+\frac{ \partial }{ \partial \, t} \; \textbf{w}(t)  = \textrm{M} \; \textbf{w}(t) + \textbf{f}(\mathbf{x},t).
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Second approach (2 of 5)}	
+\begin{flushleft}
+We intruduce an integrating factor, $\exp{(-t \, \textrm{M})}$
+\end{flushleft}
+\begin{equation*}
+e^{-t \, \textrm{M}} \, \frac{ \partial }{ \partial \, t} \; \textbf{w}(t)  - e^{-t \, \textrm{M}} \, \textrm{M} \; \textbf{w}(t) = e^{-t \, \textrm{M}} \, \textbf{f} \Rightarrow
+\end{equation*}
+\begin{equation*}
+\frac{ \partial }{ \partial \, t} \;  \left( e^{-t \, \textrm{M}} \, \textbf{w}(t) \right) = e^{-t \, \textrm{M}} \, \textbf{f} \Rightarrow  d \left( e^{-t \, \textrm{M}} \, \textbf{w}(t) \right) = e^{-t \, \textrm{M}} \, \textbf{f} \, dt,
+\end{equation*}
+\begin{equation*}
+\int_t^{t+\delta} d \left( e^{-s \, \textrm{M}} \, \textbf{w}(s) \right) =  \int_t^{t+\delta}  e^{-s \, \textrm{M}} \, \textbf{f} \, ds
+\end{equation*}
+\begin{equation*}
+ e^{-(t+\delta) \, \textrm{M}} \, \textbf{w}(t+\delta)  = e^{-t \, \textrm{M}} \, \textbf{w}(t) + \int_t^{t+\delta}  e^{-s \, \textrm{M}} \, \textbf{f} \, ds.
+\end{equation*}
+\begin{flushleft}
+Then we apply $ e^{+(t+\delta) \, \textrm{M}}$,
+\end{flushleft}
+\begin{equation*}
+\textbf{w}(t+\delta)  = e^{\delta \, \textrm{M}} \, \textbf{w}(t) + \int_t^{t+\delta}  e^{+(\delta+t-s) \, \textrm{M}} \, \textbf{f} \, ds.
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Second approach (3 of 5)}
+\begin{flushleft}
+So to propagate from $t_1$ to $t_2$, $\delta = t_2-t_1$,
+\end{flushleft}
+\begin{equation*}
+\twovec{ u(\mathbf{x},t_2) }{ v(\mathbf{x},t_2) }  = e^{\delta \, \textrm{M}} \, \twovec{ u(\mathbf{x},t_1) }{ v(\mathbf{x},t_1) } + \int_{t_1}^{t_2}  e^{+(t_2-t) \, \textrm{M}} \, \textbf{f}(t) \, dt.
+\end{equation*}
+\begin{flushleft}
+Now, what is $e^{t \, \textrm{M}}$? Well, again writing $z = \sqrt{C^2(\mathbf{x}) \, \nabla^2}$, and
+\end{flushleft}
+\begin{equation*}
+\textrm{M}^2 = \twomat{0}{1}{ z^2 }{0}^2 = \twomat{z^2}{0}{0}{z^2},
+\end{equation*}
+\begin{flushleft}
+so $\textrm{M}^{2k} = z^{2k} \, \textrm{I}$, then $\textrm{M}^{2k+1} = z^{2k} \, \textrm{M}$. We split the taylor expansion of $e^{t \, \textrm{M}}$ by parity,
+\end{flushleft}
+\begin{equation*}
+e^{t \, \textrm{M}} =  \sum_{k=0}^\infty (t \, \textrm{M})^k/k! =
+\sum_{k=0}^\infty \frac{t^{2k}}{(2k)!} \, z^{2k} \textrm{I} +
+\sum_{k=0}^\infty \frac{t^{2k+1}}{(2k+1)!} \, z^{2k} \textrm{M}.
+\end{equation*}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Second approach (4 of 5)}
+\begin{equation*}
+e^{t \, \textrm{M}} =
+\sum_{k=0}^\infty \frac{t^{2k}}{(2k)!} \, \twomat{z^{2k}}{0}{0}{z^{2k}}+
+\sum_{k=0}^\infty \frac{t^{2k+1}}{(2k+1)!} \, \twomat {0}{z^{2k}}{z^{2k+2}}{0}
+\end{equation*}
+\begin{equation*}
+\twomat {0}{z^{2k}}{z^{2k+2}}{0}=  \, \twomat {0}{z^{2k+1} \, z^{-1}}{z^{2k+1}\, z^{+1}}{0}
+\end{equation*}
+\begin{flushleft}
+Now, $\cosh{(t \, z)} = \sum_{k=0}^{\infty} \, \frac{t^{2k+1}}{(2k+1)!} z^{2k+1} $, $\sinh{(t \, z)} = \sum_{k=0}^{\infty} \, \frac{t^{2k}}{(2k)!} z^{2k}$, so we recognise,
+\end{flushleft}
+\begin{equation*}
+e^{t \, \textrm{M}} = \twomat{cosh(t \, z )} {sinh(t \, z) \, z^{-1}} {sinh(t \, z) \,z} {cosh(t \, z	)}.
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Second approach (5 of 5)}
+\begin{flushleft}
+Then we have,
+\end{flushleft}
+\begin{equation*}
+\twovec{ u(\mathbf{x},t_2) }{ v(\mathbf{x},t_2) }  = \textrm{P}(t_2-t_1) \, \twovec{ u(\mathbf{x},t_1) }{ v(\mathbf{x},t_1) } + \int_{t_1}^{t_2}  \textrm{P}(t_2-t) \, \textbf{f}(\mathbf{x},t) \, dt,
+\end{equation*}
+
+\begin{equation*}
+\twovec{ u(\mathbf{x},t_2) }{ v(\mathbf{x},t_2) }  = \textrm{P}(t_2-t_1) \, \twovec{ u(\mathbf{x},t_1) }{ v(\mathbf{x},t_1) } + \int_{0}^{t_2-t_1}  \textrm{P}(s) \, \textbf{f}(\mathbf{x},t_2-s) \, ds.
+\end{equation*}
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Anisotropic Case (1 of 1	)}
+\begin{flushleft}
+We can addapt this approach to solve the anisotropic wave equation,
+\end{flushleft}
+\begin{equation*}
+\frac{ \partial^2 }{ \partial \, t^2} \; u_i(\mathbf{x},t)  - \frac{1}{\rho} \, C_{ijkl}(\mathbf{x}) \, \frac{\partial^2 }{\partial \, x_j \, \partial \, x_l} \, u_k(\mathbf{x},t) = \frac{1}{\rho} \, f_i(\mathbf{x},t),
+\end{equation*}
+\begin{flushleft}
+then
+\end{flushleft}
+\begin{equation*}
+\frac{ \partial^2 }{ \partial \, t^2} \; u_i(\mathbf{x},t)  - \sum_{k} \, M_{ik} \, u_k(\mathbf{x},t) = \frac{1}{\rho} \, f_i(\mathbf{x},t),
+\end{equation*}
+\begin{flushleft}
+with
+\end{flushleft}
+\begin{equation*}
+M_{ik} = \sum_{j,l} \frac{1}{\rho} \, C_{ijkl}(\mathbf{x}) \, \frac{\partial^2 }{\partial \, x_j \, \partial \, x_l}
+\end{equation*}
+\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

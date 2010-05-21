@@ -1,0 +1,11 @@
+
+
+\begin{equation*}
+	u_i (\mathbf{x},t) = \threevec{ u_x(\mathbf{x},t) }{ u_y(\mathbf{x},t) }{ u_z(\mathbf{x},t) },
+\end{equation*}
+\begin{equation*}
+	z^2 = \threemat{c_1}{c_2}{c_3} {c_4}{c_5}{c_6} {c_7}{c_9}{c_9} \; \threemat {\frac{\partial^2}{\partial x \, \partial x}}{\frac{\partial^2}{\partial y \, \partial x}}{ \frac{\partial^2}{\partial z \, \partial x}} 
+	{\frac{\partial^2}{\partial x \, \partial y}}{\frac{\partial^2}{\partial y \, \partial y}}{\frac{\partial^2}{\partial z \, \partial y}}
+	 {\frac{\partial^2}{\partial x \, \partial z}}{\frac{\partial^2}{\partial y \, \partial z}}{\frac{\partial^2}{\partial z \, \partial z	}}
+%		\nabla^2 = \threemat{ \frac{\partial^2}{\partial x \, \partial y} }
+\end{equation*}

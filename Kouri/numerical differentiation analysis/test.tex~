@@ -1,0 +1,18 @@
+\documentclass[amsmath,amssymb,floatfix]{revtex4}
+
+\usepackage{graphicx,psfrag}
+
+
+\begin{document}
+
+\begin{flushleft}
+Let $K \in \mathbb{N}$, $R \subset \mathbb{R}$ an interval, and $C^K(R)$ the space of $K-$times continuously differentiable real-valued functions on $R$, and $C^K(R) \subset L^2(R)$. This is a metric space with $d(f,g) = ||f-g||_2$. \\
+Let $N \in \mathbb{N}$, and $\ell_N = \{ (a_k)_{k=0}^N: a_k \in \mathbb{R} \} \subset \ell^2$. We let $(\phi_k(x))_{k=0}^N, \phi_k(x) \in C^K(R) $ a sequence of appropiate basis functions so that we can approximate $f$ as $\tilde{f}(x) = \sum_{k=0}^N \, f_k \, \phi_k(x)$. \\
+Specifically, given $(C^K(R), N)$, we construct the tuple $(N, \mathcal{A}, (\phi_k))$, $\mathcal{A}: C^K(R) \rightarrow \ell^N$, such that $(f_k)_{k=0}^N = \mathcal{A}(f)$ and $\tilde{f}(x) = \sum_{k=0}^N \, f_k \, \phi_k(x)$
+%we define a linear transformaiton $\mathcal{A}: C^K(R) \rightarrow \ell^N$
+%, we assume that $d(f,\tilde{f}) \rightarrow 0$ as $N \rightarrow 0$.
+\end{flushleft}
+
+
+
+\end{document}
