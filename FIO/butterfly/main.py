@@ -2,6 +2,60 @@
 from numpy import *
 from math import *
 import itertools as itts
+import random as rand
+
+from numpy.linalg import svd
+from numpy import sum,where
+
+def matrixrank(A,tol=1e-8):
+    s = svd(A,compute_uv=0)
+    return sum( where( s>tol, 1, 0 ) )
+
+
+
+
+nu = 4
+N = 2**nu
+
+m = 3
+
+A = zeros((N,m))
+B = zeros((m,N))
+
+for i in range(N):
+    for j in range(m):
+        A[i][j] = rand.uniform(-1.0,1.0)
+        B[j][i] = rand.uniform(-1.0,1.0)
+
+f = zeros((N,1))
+
+for i in range(N):
+    f[i] = rand.uniform(-1.0,1.0)
+
+K = dot(A,B)
+
+u = dot(K,f)
+
+
+print u
+
+print matrixrank(K)
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+
+
+
 
 def cart_prod2(X,Y ):
     prod=[]
@@ -73,7 +127,7 @@ if __name__ == "__main__":
     wp.write_png( f, "out.png", major_scale=1.0, center=0., red_params=(0.5, 0.,0.5,1. ), green_params=(0.5, 0.,0.5,1. ), blue_params=(0.5, 0.,0.5,1. ), ordering='rm' )
     
     
-
+"""
 
 """
     def K(x,y):
