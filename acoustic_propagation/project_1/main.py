@@ -14,7 +14,7 @@ def ricker_wavelet(t, sigma, gamma, tau ):
     return -sqrt(2.0/pi)*sigma*gamma*(sigma-2.0*sigma*gamma*(sigma*t-tau)**2)*exp(-gamma*(sigma*t-tau)**2)
 
 
-grid = grid2d( a1 = -500, b1 = 3500, a2=-300, b2=1200, n1=1024/2, n2=384/2)
+grid = grid2d( a1 = -500, b1 = 3500, a2=-300, b2=1200, n1=1024/4, n2=384/4 )
 
 session = {}
 session['grid'] = grid
@@ -43,21 +43,42 @@ def init(session, P ):
     P.set( session['grid'], velocity=session['velocity'], damping=session['damping'],  expansion_order=session['expansion_order'],   hdaf_order=session['hdaf_order'], hdaf_gamma=session['hdaf_gamma'] )
 
 
-def run( session ):
+import math
+def clean_str(x, n=4):
+    if abs(int(math.floor(math.log10(x)))) > n:
+        return ("%"+str(int(math.ceil(n/2)))+"."+str(int(math.floor(n/2)))+"e")%x
+    
+    else:
+        return ("%0"+str(n)+"d")%x
+
+
+def clean_str(x, n=4):
+    if abs(int(math.floor(math.log10(x)))) > n:
+        return ("%"+str(int(math.ceil(n/2)))+"."+str(int(math.floor(n/2)))+"e")%x
+    
+    else:
+        return ("%0"+str(n)+"d")%x
+
+def run(session, P, u0=None, v0=None ):
     
     grid = session['grid']
     
-    u = grid.zeros()
-    v = grid.zeros()
-    driving_1 = grid.zeros()
-    driving_2 = grid.zeros()
-    i0 = session['drive_index1']
-    j0 = session['drive_index2']
+    u=None
+    v=None
+    
+    if u0 is None:
+        u = grid.zeros()
+    else:
+        u = u0.copy()
+    
+    if v0 is None:
+        v = grid.zeros()
+    else:
+        v = u0.copy()
+    
     fname = temp_directory  + str(time_module.time())
     scipy.io.savemat( fname, {'m':u} )
-    #results[str(step)] = { 'time': time, 'step':step, 'fname':fname }
     u_fnames = [fname]
-    driving = []
     time_step = session['time_step']
     final_time = session['final_time']
     
@@ -78,15 +99,13 @@ def run( session ):
         try:
             rate = ((wall_time()-start_wall_time)/time)
             eta = rate*(session['final_time']-time)
-            print "step:", step, "\ttime:", time, "\twall time", wall_time(), "\teta:", eta ,"\tmagnitude:", u_norm, "\trate:", rate
+            
+            print "step:", step, "\ttime:", time, "\twall time", clean_str(wall_time()), "\teta:", clean_str(eta) ,"\tmagnitude:", clean_str(u_norm), "\trate:", clean_str(rate)
+            
         except:
             print "step:", step, "\ttime:", time, "\twall time", wall_time()
         
-        driving_1[i0,j0] = (session['driving_function'])(time)
-        driving_2[i0,j0] = (session['driving_function'])(time+time_step)
-        driving.append(driving_1[i0,j0])
-        
-        err = P( time_step, u,v, u,v, driving_1, driving_2 )
+        err = P( time_step, u,v, u,v, )
         
         if err is not None:
             print err
@@ -103,6 +122,8 @@ def run( session ):
         
         step += 1
         time = time_step*step
+
+
     
 
 def FT( session, frequency ):
@@ -144,11 +165,16 @@ def load( fname ):
     input.close()
     return session
 
-def render( data, fname ):
-    ar = data.copy()
-    write_png( ar, fname, center=mean(ar), major_scale=std(ar)*3, red_params=(0.33,0,0,1), green_params=(0.5,0,1,0), blue_params=(0.66,1,0,0,) )
 
-def render_all( session, directory="/workspace/output/acoustic_propagation/",  skip=1, new_grid=None ):
+def render( data, fname, major_scale=None, center=None ):
+    ar = data.copy()
+    if major_scale is None:
+        major_scale = std(ar)*10.0
+    if center is not None:
+        center=mean(ar)
+    write_png( ar, fname, center=center, major_scale=major_scale, red_params=(0.33,0,0,1), green_params=(0.5,0,1,0), blue_params=(0.66,1,0,0,) )
+
+def render_all( session, directory="/workspace/output/acoustic_propagation/",  skip=1, new_grid=None, major_scale=None, center=None ):
     
     resampler=None
     
@@ -169,8 +195,11 @@ def render_all( session, directory="/workspace/output/acoustic_propagation/",  s
             else:
                 u = data['m'].copy('C')
             
-            render( u, directory+"%05d.png"%step )
+            render( u, directory+"%05d.png"%step, major_scale, center )
         skipped += 1
+
+
+
 
 if __name__ == "__main__":
     

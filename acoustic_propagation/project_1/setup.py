@@ -1,6 +1,3 @@
-
-
-
 import time as time_module
 from math import *
 from numpy import *
@@ -74,8 +71,6 @@ class simpleFunction:
             if x in E:
                 sum += self.values[k]
         return sum
-
-
 
 
 
